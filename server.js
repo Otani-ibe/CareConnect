@@ -1,0 +1,43 @@
+require('dotenv').config(); // Load environment variables
+const authRoutes = require('./routes/authRoutes');
+const matchRoutes = require('./routes/matchRoutes');
+const messageRoutes = require('./routes/messageRoutes');
+const reviewRoutes = require('./routes/reviewRoutes');
+const userRoutes = require('./routes/userRoutes');
+const sessionRoutes = require('./routes/sessionRoutes');
+const express = require('express');
+const connectDB = require('./config/db');
+
+const app = express();
+app.use(express.json());
+
+// Connect to MongoDB
+connectDB();
+app.use('/api/auth', authRoutes);
+app.use('/api/match', matchRoutes);
+app.use('/api/message', messageRoutes);
+app.use('/api/review', reviewRoutes);
+app.use('/api/user', userRoutes);
+app.use('/api/session', sessionRoutes);
+
+// Routes (Example)
+app.get('/', (req, res) => {
+  res.send('CareConnect API is running...');
+});
+
+// 404 Middleware
+app.use((req, res, next) => {
+  res.status(404).json({ error: 'Route not found' });
+});
+
+// Global Error Handler
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).json({ error: 'Something went wrong!' });
+});
+
+// Start server
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => {
+  console.log(`🚀 Server running on port ${PORT}`);
+});
