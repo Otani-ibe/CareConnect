@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 
 // ✅ This should import actual functions
-const { registerUser, loginUser } = require('../controllers/authcontroller');
+const { registerUser, loginUser } = require('../controllers/authController');
 
 // ✅ Pass real functions to route
 router.post('/register', registerUser);
