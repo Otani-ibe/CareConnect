@@ -7,6 +7,7 @@ const userRoutes = require('./routes/userRoutes');
 const sessionRoutes = require('./routes/sessionRoutes');
 const express = require('express');
 const connectDB = require('./config/db');
+// const axios = require("axios");
 
 const app = express();
 app.use(express.json());
@@ -35,6 +36,22 @@ app.use((err, req, res, next) => {
   console.error(err.stack);
   res.status(500).json({ error: 'Something went wrong!' });
 });
+
+// const axios = require("axios");
+
+// const PING_INTERVAL = 30 * 1000;
+
+// setInterval(() => {
+//   axios
+//     .get(`${process.env.SERVER_URL}/api/users/ping/hit-endpoint-every-30-sec`)
+//     .then((r) => {
+//       console.log("Ping success", r.data);
+//     })
+//     .catch((e) => {
+//       console.error("Ping error", e);
+//     });
+// }, PING_INTERVAL);
+
 
 // Start server
 const PORT = process.env.PORT || 5000;
