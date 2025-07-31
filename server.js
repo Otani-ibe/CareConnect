@@ -7,10 +7,13 @@ const userRoutes = require('./routes/userRoutes');
 const sessionRoutes = require('./routes/sessionRoutes');
 const express = require('express');
 const connectDB = require('./config/db');
+const cors = require("cors")
 // const axios = require("axios");
 
 const app = express();
 app.use(express.json());
+
+app.use(cors())
 
 // Connect to MongoDB
 connectDB();
