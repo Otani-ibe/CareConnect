@@ -52,6 +52,33 @@ const manageSession = async (req, res) => {
   }
 };
 
+const getSession = async (req, res) => {
+  const { sessionId, caregiverId, seniorId } = req.query;
 
+  try {
+    if (sessionId) {
+      const session = await Session.findById(sessionId).populate('matchId');
+      if (!session) {
+        return res.status(404).json({ message: 'Session not found' });
+      }
+      return res.status(200).json({ session });
+    }
 
-module.exports = { requestSession, manageSession };
+    let query = {};
+    if (caregiverId) query.caregiverId = caregiverId;
+    if (seniorId) query.seniorId = seniorId;
+
+    const sessions = await Session.find(query).sort({ appointmentDate: -1 }).populate('matchId');
+
+    res.status(200).json({ sessions });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Server error' });
+  }
+};
+
+module.exports = {
+  requestSession,
+  manageSession,
+  getSession,
+};
